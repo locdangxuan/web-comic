@@ -1,4 +1,4 @@
-//<----------------validation------------------------>
+//<-------------------validation------------------------>
 const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'));
 
 const registerValidation = (data) => {
@@ -17,6 +17,10 @@ const loginValidation = (data) => {
 		password: Joi.string().min(8).required()
 	});
 	return schema.validate(data);
+}
+
+const updateInfoValidation = (data) => {
+
 }
 
 module.exports.registerValidation = registerValidation;
