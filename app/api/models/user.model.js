@@ -3,19 +3,32 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
+        trim: true,
         min: 8,
         max: 255
     },
     email: {
         type: String,
         required: true,
+        trim: true,
         max: 255
     },
     password: {
         type: String,
         required: true,
+        trim: true,
         min: 8,
         max: 1024
+    },
+    firstName: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    lastName: {
+        type: String,
+        trim: true,
+        required: true
     },
     date: {
         type: Date,
@@ -25,8 +38,8 @@ const userSchema = new mongoose.Schema({
         default: null,
         type: String,
     },
+
 });
 
-// userSchema.set('toJSON', { virtuals: true });
 // module.exports = mongoose.model('User', userSchema);
 module.exports = mongoose.model('User', userSchema, 'users');

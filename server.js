@@ -5,16 +5,14 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
-
 const port = 3000;
 
 const mongoose = require('./config/database'); //database configuration
-
 const userRoute = require('./routes/user.route');
 
-
 //<---------------connect to database------------------->
-mongoose.connection.on('error', console.error.bind(console, "Mongo connection fail"))
+mongoose.set('useFindAndModify', false); //modify user when update and delete
+mongoose.connection.on('error', console.error.bind(console, "Mongo connection fail"));
 
 //<----------------middleware--------------------->
 app.use(express.json());
