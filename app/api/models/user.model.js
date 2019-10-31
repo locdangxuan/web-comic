@@ -30,7 +30,12 @@ const userSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    date: {
+    phoneNumber: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    dateOfBirth: {
         type: Date,
         default: Date.now
     },
@@ -41,5 +46,4 @@ const userSchema = new mongoose.Schema({
 
 });
 
-// module.exports = mongoose.model('User', userSchema);
 module.exports = mongoose.model('User', userSchema, 'users');

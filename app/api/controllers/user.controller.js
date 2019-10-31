@@ -8,34 +8,35 @@ const { registerValidation, loginValidation, updateInfoValidation, updatePasswor
 
 module.exports = {
     register: async (req, res, next) => {
-        //<----------------validate data before being a user----------------->
-        const { error } = registerValidation(req.body);
-        if (error) {
-            return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.details[0].message);
-        }
-
-        //<-------checking email and username is already exist in database------>
-        const emailExist = await UserModel.findOne({ email: req.body.email });
-        const userExist = await UserModel.findOne({ username: req.body.username });
-        if (emailExist)
-            return res.status(httpStatus.BAD_REQUEST).send("Email already exist");
-        if (userExist)
-            return res.status(httpStatus.BAD_REQUEST).send("Username already exist");
-
-        //<-------------------hashed password------------------------>
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
-        //<-------------------Create a user-------------------------->
-        const user = new UserModel({
-            username: req.body.username,
-            email: req.body.email,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            password: hashedPassword,
-            date: req.body.date
-        });
         try {
+            //<----------------validate data before being a user----------------->
+            const { error } = registerValidation(req.body);
+            if (error) {
+                return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.details[0].message);
+            }
+
+            //<-------checking email and username is already exist in database------>
+            const emailExist = await UserModel.findOne({ email: req.body.email });
+            const userExist = await UserModel.findOne({ username: req.body.username });
+            if (emailExist)
+                return res.status(httpStatus.BAD_REQUEST).send("Email already exist");
+            if (userExist)
+                return res.status(httpStatus.BAD_REQUEST).send("Username already exist");
+
+            //<-------------------hashed password------------------------>
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+            //<-------------------Create a user-------------------------->
+            const user = new UserModel({
+                username: req.body.username,
+                email: req.body.email,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                password: hashedPassword,
+                phoneNumber: req.body.phoneNumber,
+                dateOfBirth: req.body.date
+            });
             //<-------------------save user to database------------------------->
             await user.save();
             res.send("User successfully created!");
@@ -101,7 +102,6 @@ module.exports = {
 
     updatePassword: async (req, res, next) => {
         try {
-            console.log("connect with updatePassword");
             //<-------------validate data before updating----------------->
             const { error } = updatePasswordValidation(req.body);
             if (error)
@@ -135,7 +135,15 @@ module.exports = {
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }
+    },
+
+    getUserById: async (req, res, next) => {
+        try {
+            const user = await UserModel.findById(req.params.id);
+            res.send(user);
+        } catch (err) {
+            console.log("error")
+            return res.status(httpStatus.BAD_REQUEST).send(err)
+        }
     }
-
-
 }
