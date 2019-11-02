@@ -14,6 +14,7 @@ const userRoute = require('./routes/user.route');
 mongoose.set('useFindAndModify', false); //modify user when update and delete
 mongoose.connection.on('error', console.error.bind(console, "Mongo connection fail"));
 
+
 //<----------------middleware--------------------->
 app.use(express.json());
 

@@ -43,7 +43,14 @@ const userSchema = new mongoose.Schema({
         default: null,
         type: String,
     },
-
+    locked: {
+        default: false,
+        type: Boolean,
+    },
+    Admin: {
+        default: false,
+        type: Boolean
+    }
 });
 
 module.exports = mongoose.model('User', userSchema, 'users');
