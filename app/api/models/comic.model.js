@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 const comicSchema = new mongoose.Schema({
     name: {
-        typed: String,
+        type: String,
         required: true,
         trim: true
     },
     image: {
-        typed: String,
+        type: String,
         required: true,
         trim: true
     },
     description: {
-        typed: String,
+        type: String,
         required: true,
         trim: true
-    },
+    }
 })
 
 module.exports = mongoose.model('Comic', comicSchema, 'comics');

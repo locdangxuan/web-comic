@@ -6,7 +6,7 @@ const UserModel = require('../models/user.model');
 const { registerValidation, loginValidation, updateInfoValidation, updatePasswordValidation } = require('../validation');
 
 module.exports = {
-    register: async (req, res, next) => {
+    register: async (req, res) => {
         try {
             //<----------------validate data before being a user----------------->
             const { error } = registerValidation(req.body);
@@ -44,7 +44,7 @@ module.exports = {
         };
     },
 
-    login: async (req, res, next) => {
+    login: async (req, res) => {
         try {
             //<--------------checking username valid-------------------->
             const user = await UserModel.findOne({ username: req.body.username });
@@ -69,7 +69,7 @@ module.exports = {
 
     },
 
-    logout: async (req, res, next) => {
+    logout: async (req, res) => {
         try {
             //<-----------------remove token when user logout---------------------->
             const user = await UserModel.findOne({ username: req.body.username });
@@ -82,7 +82,7 @@ module.exports = {
 
     },
 
-    update: async (req, res, next) => {
+    update: async (req, res) => {
         try {
             //<----------------validate data before updating----------------->
             const { error } = updateInfoValidation(req.body);
@@ -99,7 +99,7 @@ module.exports = {
         }
     },
 
-    updatePassword: async (req, res, next) => {
+    updatePassword: async (req, res) => {
         try {
             //<-------------validate data before updating----------------->
             const { error } = updatePasswordValidation(req.body);
@@ -127,7 +127,7 @@ module.exports = {
         }
     },
 
-    delete: async (req, res, next) => {
+    delete: async (req, res) => {
         try {
             const deleteUser = await UserModel.findOneAndRemove({ username: req.body.username });
             return (!deleteUser) ? res.send("cannot delete this user") : res.send("user successfully deleted!");
@@ -136,7 +136,7 @@ module.exports = {
         }
     },
 
-    getUserById: async (req, res, next) => {
+    getUserById: async (req, res) => {
         try {
             const user = await UserModel.findById(req.params.id);
             res.send(user);
