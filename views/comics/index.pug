@@ -1,0 +1,12 @@
+extends ../layouts/common.pug
+block content
+	h1 Products
+	.row
+		each comic in comics
+			.col-sm-3
+				.card(style='width: 10rem;')
+					img.card-img-top(src=comic.image, alt='img')
+					.card-body
+						h5.card-title=comic.name
+						p.card-text=comic.description
+						a.btn.btn-primary Watch

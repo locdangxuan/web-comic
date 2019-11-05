@@ -117,6 +117,11 @@ module.exports = {
             const salt = await bcrypt.genSalt(10);
             const hashedNewPassword = await bcrypt.hash(req.body.newPassword, salt);
 
+            //<--------------new password must be different than the old one----------->
+            const checkPassword = req.body.oldPassword.localeCompare(req.body.newPassword);
+            if (!checkPassword)
+                res.status(httpStatus.UNAUTHORIZED).send('new password must be different than the old one');
+
             //<-------------------change password and save to database--------------->
             user.password = hashedNewPassword;
             await user.save();
@@ -141,8 +146,16 @@ module.exports = {
             const user = await UserModel.findById(req.params.id);
             res.send(user);
         } catch (err) {
-            console.log("error")
             return res.status(httpStatus.BAD_REQUEST).send(err)
+        }
+    },
+
+    getListUser: async (req, res) => {
+        try {
+            let users = await comicModel.find();
+            res.send(users);
+        } catch {
+            res.status(httpStatus.BAD_REQUEST).send(err);
         }
     }
 }
