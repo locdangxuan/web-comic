@@ -2,7 +2,7 @@
 console.log("db is config");
 const mongoose = require('mongoose');
 
-//mongodb+srv://locdangxuan123:vangvang17071998@cluster0-xac1v.mongodb.net/test?retryWrites=true&w=majority
+//mongodb+srv://web-comics:4everalone@cluster0-xhzvc.mongodb.net/test?retryWrites=true&w=majority
 //mongodb://localhost:27017/web-comic
 const mongoDB = process.env.MONGO_URL;
 mongoose.connect(mongoDB, {

@@ -13,7 +13,7 @@ const comicRoute = require('./routes/comic.route');
 
 //<---------------const view route------------------>
 const viewComicRoute = require('./app/views/routes/comic.view.route');
-
+const viewUserRoute = require('./app/views/routes/user.view.route')
 //<---------------connect to database------------------->
 mongoose.set('useFindAndModify', false); //modify user when update and delete
 mongoose.connection.on('error', console.error.bind(console, "Mongo connection fail"));
@@ -35,7 +35,8 @@ app.use('/api/users', userRoute);
 app.use('/api/comics', comicRoute);
 
 //<---------------view route--------------->
-app.use('/comics', viewComicRoute)
+app.use('/comics', viewComicRoute);
+app.use('/users', viewUserRoute);
 
 //<---------------start server-------------------------->
 app.listen(port, () => {console.log("Server running in port " + port)});

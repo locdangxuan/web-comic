@@ -25,10 +25,10 @@ const loginValidation = (data) => {
 const updateInfoValidation = (data) => {
     const schema = Joi.object({
         username: Joi.string().min(8).required(),
-        firstName: Joi.string().required(),
-        lastName: Joi.string().required(),
-        phoneNumber: Joi.string().min(8).required(),
-        date: Joi.date().format('YYYY-MM-DD').utc().required()
+        firstName: Joi.string(),
+        lastName: Joi.string(),
+        phoneNumber: Joi.string().min(8),
+        date: Joi.date().format('YYYY-MM-DD').utc()
     });
     return schema.validate(data);
 }

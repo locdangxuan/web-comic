@@ -11,9 +11,11 @@ html
 				li.nav-item
 					a.nav-link(href='/') Home
 				li.nav-item
-					a.nav-link(href='/products') Products 
+					a.nav-link(href='/users') Users
+				li.nav-item
+					a.nav-link(href='/comics') Comics 
 			if(user)
 				p= user.name
 		
-	.container.pt-5 
+	.container
 		block content

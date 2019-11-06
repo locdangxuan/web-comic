@@ -22,9 +22,8 @@ module.exports = {
         try {
             let comics = await comicModel.find();
             res.send(comics);
-        } catch {
+        } catch (err){
             res.status(httpStatus.BAD_REQUEST).send(err);
         }
-
     }
 }

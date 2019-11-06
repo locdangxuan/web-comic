@@ -152,10 +152,11 @@ module.exports = {
 
     getListUser: async (req, res) => {
         try {
-            let users = await comicModel.find();
+            let users = await UserModel.find();
             res.send(users);
-        } catch {
+        } catch (err){
             res.status(httpStatus.BAD_REQUEST).send(err);
         }
     }
+
 }
