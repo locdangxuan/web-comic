@@ -19,7 +19,7 @@ module.exports = {
             res.status(httpStatus.BAD_REQUEST).send(err);
         }
     },
-    
+
     addNewChapter: async (req, res) => {
         try {
             //<--------------checking comic is already exist---------------->

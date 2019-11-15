@@ -33,7 +33,7 @@ app.use(express.json());
 //<---------------api route----------------->
 app.use('/api/users', userRoute);
 app.use('/api/comics', comicRoute);
-app.use('/api/comics/:id', chapterRoute)
+// app.use('/api/comics/:id', chapterRoute);
 //<---------------view route--------------->
 app.use('/comics', viewComicRoute);
 app.use('/users', viewUserRoute);

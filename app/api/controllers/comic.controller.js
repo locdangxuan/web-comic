@@ -29,7 +29,7 @@ module.exports = {
 
     delete: async (req, res) => {
         try {
-            const deleteComic = await comicModel.findOneAndRemove();
+            const deleteComic = await ComicModel.findOneAndRemove({_id: req.body.id});
             return (!deleteComic) ? res.send("cannot delete this comic") : res.send("Comic successfully deleted!");
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
@@ -38,7 +38,7 @@ module.exports = {
 
     getComicById: async (req, res) => {
         try {
-            const comic = await comicModel.findById(req.params.id);
+            const comic = await ComicModel.findById(req.params.id);
             res.send(comic);
         } catch (err) {
             console.log("error")
@@ -48,7 +48,7 @@ module.exports = {
 
     update: async (req, res) => {
         try {
-            const comic = await comicModel.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+            const comic = await ComicModel.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
             await comic.save();
             res.send('update successfully!');
 
