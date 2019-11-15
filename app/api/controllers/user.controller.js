@@ -46,6 +46,13 @@ module.exports = {
 
     login: async (req, res) => {
         try {
+
+            //<----------------validate data before being a user----------------->
+            const { error } = loginValidation(req.body);
+            if (error) {
+                return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error.details[0].message);
+            }
+
             //<--------------checking username valid-------------------->
             const user = await UserModel.findOne({ username: req.body.username });
             if (!user)
@@ -62,7 +69,7 @@ module.exports = {
             //<-----save token when logged in and save to database-------------->
             user.token = token;
             await user.save();
-            res.send('login successfully!');
+            res.send(user);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }
@@ -75,7 +82,7 @@ module.exports = {
             const user = await UserModel.findOne({ username: req.body.username });
             user.token = null;
             await user.save();
-            return res.send('logout successfully!');
+            return res.send('logged out successfully!');
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }
@@ -154,7 +161,18 @@ module.exports = {
         try {
             let users = await UserModel.find();
             res.send(users);
-        } catch (err){
+        } catch (err) {
+            res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+
+    setAdmin: async (req, res) => {
+        try {
+            const user = await UserModel.findOne({username:req.body.username});
+            user.isAdmin = !user.isAdmin;
+            await user.save();
+            res.send('set Admin successfully!');
+        } catch (err) {
             res.status(httpStatus.BAD_REQUEST).send(err);
         }
     }

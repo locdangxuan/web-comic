@@ -28,7 +28,7 @@ const updateInfoValidation = (data) => {
         firstName: Joi.string(),
         lastName: Joi.string(),
         phoneNumber: Joi.string().min(8),
-        date: Joi.date().format('YYYY-MM-DD').utc()
+        dateOfBirth: Joi.date().format('YYYY-MM-DD').utc()
     });
     return schema.validate(data);
 }
@@ -37,9 +37,9 @@ const updatePasswordValidation = (data) => {
     const schema = Joi.object({
         username: Joi.string().min(8).required(),
         oldPassword: Joi.string().min(8).required(),
-        newPassword: Joi.string().min(8).required(),
+        newPassword: Joi.string().min(8).required()
     });
-     return schema.validate(data);
+    return schema.validate(data);
 }
 
 module.exports.registerValidation = registerValidation;
