@@ -10,7 +10,8 @@ const port = 3000;
 const mongoose = require('./config/database'); //database configuration
 const userRoute = require('./routes/user.route');
 const comicRoute = require('./routes/comic.route');
-const chapterRoute = require('./routes/chapter.route');
+// const chapterRoute = require('./routes/chapter.route');
+
 //<---------------const view route------------------>
 const viewComicRoute = require('./app/views/routes/comic.view.route');
 const viewUserRoute = require('./app/views/routes/user.view.route');

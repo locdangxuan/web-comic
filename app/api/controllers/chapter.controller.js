@@ -4,6 +4,10 @@ const httpStatus = require('http-status');
 module.exports = {
     createListChapter: async (req, res) => {
         try {
+            const comicExist = await chapterModel.findOne({ comicID: req.params.id });
+            if (comicExits)
+                return res.status(httpStatus.BAD_REQUEST).send('Comic already have chapters');
+
             const chapterNumberExist = await chapterModel.findOne({ chapterNumber: req.body.detail[0].chapterNumber });
             if (chapterNumberExist)
                 return res.status(httpStatus.BAD_REQUEST).send("chapter already exist");
@@ -23,10 +27,11 @@ module.exports = {
     addNewChapter: async (req, res) => {
         try {
             //<--------------checking comic is already exist---------------->
-
+            console.log(req.params.id);
             const comicExist = await chapterModel.findOne({ comicID: req.params.id });
             if (!comicExist)
-                res.send("cannot find comic");
+                return res.send("cannot find comic");
+
             const newChapter = {
                 chapterNumber: req.body.chapterNumber,
                 description: req.body.description,
@@ -35,11 +40,12 @@ module.exports = {
                 content: req.body.content
             }
 
-            const checkChapterNumber = comicExist.detail.find((element) => {
-                return element.chapterNumber === newChapter.chapterNumber;
+            const checkChapterNumber = comicExist.detail.find((chapter) => {
+                return chapter.chapterNumber === newChapter.chapterNumber;
             });
             if (typeof checkChapterNumber !== "undefined")
-                res.send("Chapter is exist !");
+                return res.send("Chapter is exist !");
+
             comicExist.detail.push(newChapter);
             comicExist.detail.sort((a, b) => {
                 return a.chapterNumber > b.chapterNumber ? 1 : -1;
@@ -83,7 +89,7 @@ module.exports = {
         }
     },
 
-    getAllChapter: async (req, res) => {
+    getListChapter: async (req, res) => {
         let chapter = await chapterModel.find();
         res.send(chapter);
     }
