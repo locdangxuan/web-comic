@@ -1,0 +1,9 @@
+html
+	head
+		Link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css")
+	body.text-center
+		h1 Chapters
+		p
+			each chapter in detail
+				a(href="/comics/" + chapterComic.comicID + "/" + chapter.chapterNumber)= "chapter " + chapter.chapterNumber
+				br

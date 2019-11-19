@@ -5,28 +5,28 @@ const chapterSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    detail:[{
+    detail: [{
         chapterNumber: {
-            type : Number,
-            required : true,
-            trim : true
+            type: Number,
+            required: true,
+            trim: true
         },
         description: {
             type: String,
             required: true,
             trim: true
         },
-        image:[{
+        image: [{
             type: String,
-            trim:true
+            trim: true
         }],
-        video:{
-            type:String,
-            trim:true
+        video: {
+            type: String,
+            trim: true
         },
-        content:{
-            type:String,
-            trim:true,
+        content: {
+            type: String,
+            trim: true,
         }
     }]
 })

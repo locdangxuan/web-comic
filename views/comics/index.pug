@@ -10,4 +10,4 @@ block content
 					.card-body
 						h5.card-title=comic.name
 						p.card-text=(comic.description.length > maxLength ? comic.description.substring(0, maxLength) + "..." : comic.description)  
-						a.btn.btn-primary(style='color: white') Watch
+						a.btn.btn-primary(href="/comics/" + comic._id, style='color: white') Watch

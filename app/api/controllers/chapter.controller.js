@@ -1,18 +1,18 @@
-const chapterModel = require('../models/chapter.model');
+const ChapterModel = require('../models/chapter.model');
 const httpStatus = require('http-status');
 
 module.exports = {
     createListChapter: async (req, res) => {
         try {
-            const comicExist = await chapterModel.findOne({ comicID: req.params.id });
+            const comicExist = await ChapterModel.findOne({ comicID: req.params.id });
             if (comicExits)
                 return res.status(httpStatus.BAD_REQUEST).send('Comic already have chapters');
 
-            const chapterNumberExist = await chapterModel.findOne({ chapterNumber: req.body.detail[0].chapterNumber });
+            const chapterNumberExist = await ChapterModel.findOne({ chapterNumber: req.body.detail[0].chapterNumber });
             if (chapterNumberExist)
                 return res.status(httpStatus.BAD_REQUEST).send("chapter already exist");
             //<-------------------------create a list comic------------------------------>
-            const chapter = new chapterModel({
+            const chapter = new ChapterModel({
                 comicID: req.params.id,
                 detail: req.body.detail
             });
@@ -28,7 +28,7 @@ module.exports = {
         try {
             //<--------------checking comic is already exist---------------->
             console.log(req.params.id);
-            const comicExist = await chapterModel.findOne({ comicID: req.params.id });
+            const comicExist = await ChapterModel.findOne({ comicID: req.params.id });
             if (!comicExist)
                 return res.send("cannot find comic");
 
@@ -72,7 +72,7 @@ module.exports = {
 
     deleteChapter: async (req, res) => {
         try {
-            const comicExist = await chapterModel.findOne({ comicID: req.params.id });
+            const comicExist = await ChapterModel.findOne({ comicID: req.params.id });
             if (!comicExist)
                 res.send("cannot find comic");
             const removeChapter = req.body.chapterNumber;
@@ -90,7 +90,7 @@ module.exports = {
     },
 
     getListChapter: async (req, res) => {
-        let chapter = await chapterModel.find();
+        let chapter = await ChapterModel.find();
         res.send(chapter);
     }
 }
