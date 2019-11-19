@@ -4,9 +4,9 @@ const httpStatus = require('http-status');
 module.exports = {
     createListChapter: async (req, res) => {
         try {
-            const comicExist = await ChapterModel.findOne({ comicID: req.params.id });
-            if (comicExits)
-                return res.status(httpStatus.BAD_REQUEST).send('Comic already have chapters');
+            // const comicExist = await ChapterModel.findOne({ comicID: req.params.id });
+            // if (comicExits)
+            //     return res.status(httpStatus.BAD_REQUEST).send('Comic already have chapters');
 
             const chapterNumberExist = await ChapterModel.findOne({ chapterNumber: req.body.detail[0].chapterNumber });
             if (chapterNumberExist)
@@ -27,7 +27,6 @@ module.exports = {
     addNewChapter: async (req, res) => {
         try {
             //<--------------checking comic is already exist---------------->
-            console.log(req.params.id);
             const comicExist = await ChapterModel.findOne({ comicID: req.params.id });
             if (!comicExist)
                 return res.send("cannot find comic");
