@@ -89,7 +89,13 @@ module.exports = {
     },
 
     getListChapter: async (req, res) => {
-        let chapter = await ChapterModel.find();
-        res.send(chapter);
+        try {
+            // console.log("1");
+            let chapter = await ChapterModel.findOne({ comicID: req.params.id });
+            //let chapter = await ChapterModel.find();
+            res.send(chapter);
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
     }
 }

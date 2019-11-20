@@ -15,7 +15,7 @@ router.put('/:id/update-comic', comicController.update);
 router.post('/:id/create-list-chapter', chapterController.createListChapter);
 router.post('/:id/add-new-chapter', chapterController.addNewChapter);
 router.put('/:id/update-chapter', chapterController.updateChapter);
-router.post('/:id/list-chapter', chapterController.getListChapter);
+router.get('/:id/list-chapter', chapterController.getListChapter);
 router.post('/:id/delete-chapter', chapterController.deleteChapter);
 
 module.exports = router;
