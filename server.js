@@ -6,6 +6,23 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
+const cors = require('cors')
+// app.use(cors());
+
+app.use(cors({
+    origin: ['http://localhost:8080', 'http://127.0.0.1:4200'],
+    credentials: true
+}));
+
+app.use(function(req, res, next) {
+
+    res.header('Access-Control-Allow-Origin', "http://localhost:8080");
+    res.header('Access-Control-Allow-Headers', true);
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    next();
+});
+
 //<---------------const api route------------------->
 const mongoose = require('./config/database'); //database configuration
 const userRoute = require('./routes/user.route');
@@ -24,9 +41,9 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 app.get('/', (req, res) => {
-	res.render('index', {
-		comic: 'Comics'
-	});
+    res.render('index', {
+        comic: 'Comics'
+    });
 });
 //<----------------middleware json--------------------->
 app.use(express.json());
@@ -40,4 +57,4 @@ app.use('/comics', viewComicRoute);
 app.use('/users', viewUserRoute);
 
 //<---------------start server-------------------------->
-app.listen(port, () => {console.log("Server running in port " + port)});
+app.listen(port, () => { console.log("Server running in port " + port) });
