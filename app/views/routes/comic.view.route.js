@@ -5,8 +5,10 @@ const viewChapterController = require('../controllers/chapter.view.controller');
 
 router.get('/', viewComicController.index);
 
+router.get('/search', viewComicController.searchComic);
+
 router.get('/:id', viewChapterController.getListChapter);
 
-router.get('/:id/:chapterNumber', viewChapterController.getImage);   
+router.get('/:id/:chapterNumber', viewChapterController.getImage);
 
 module.exports = router;

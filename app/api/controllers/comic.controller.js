@@ -29,7 +29,7 @@ module.exports = {
 
     delete: async (req, res) => {
         try {
-            const deleteComic = await ComicModel.findOneAndRemove({_id: req.body.id});
+            const deleteComic = await ComicModel.findOneAndRemove({ _id: req.body.id });
             return (!deleteComic) ? res.send("cannot delete this comic") : res.send("Comic successfully deleted!");
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
@@ -52,6 +52,19 @@ module.exports = {
             await comic.save();
             res.send('update successfully!');
 
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+
+    searchComic: async (req, res) => {
+        try {
+            let comics = await ComicModel.find();
+            let q = req.query.q;
+            let comicFilter = comics.filter(comic => {
+                return comic.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+            });
+            res.send(comicFilter);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }

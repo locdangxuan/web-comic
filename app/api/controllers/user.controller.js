@@ -46,7 +46,6 @@ module.exports = {
 
     login: async (req, res) => {
         try {
-
             //<----------------validate data before being a user----------------->
             const { error } = loginValidation(req.body);
             if (error) {
