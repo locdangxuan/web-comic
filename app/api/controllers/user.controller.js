@@ -164,7 +164,19 @@ module.exports = {
             res.status(httpStatus.BAD_REQUEST).send(err);
         }
     },
-
+    searchUser: async (req, res) => {
+        try {
+            let users = await UserModel.find();
+            let q = req.query.q;
+            let userFilter = users.filter(user => {
+                return user.firstName.toLowerCase().indexOf(q.toLowerCase())  !== -1 ||
+                    user.lastName.toLowerCase().indexOf(q.toLowerCase())  !== -1 ;
+            });
+            res.send(userFilter);
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
     setAdmin: async (req, res) => {
         try {
             const user = await UserModel.findOne({username:req.body.username});

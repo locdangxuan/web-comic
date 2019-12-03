@@ -24,7 +24,19 @@ const comicSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
-    }
+    },
+    comments:[{
+        postedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        content: {
+            type: String,
+            required: true,
+            trim: true
+        }
+    }]
 })
 
 module.exports = mongoose.model('Comic', comicSchema, 'comics');

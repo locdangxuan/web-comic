@@ -44,16 +44,23 @@ app.get('/', (req, res) => {
         comic: 'Comics'
     });
 });
+
 //<----------------middleware json--------------------->
 app.use(express.json());
 
 //<---------------api route----------------->
 app.use('/api/users', userRoute);
 app.use('/api/comics', comicRoute);
+
 // app.use('/api/comics/:id', chapterRoute);
 //<---------------view route--------------->
 app.use('/comics', viewComicRoute);
 app.use('/users', viewUserRoute);
+
+// If any page not handled already handled (ie. doesn't exists)
+app.get("*", function(req, res) {
+  res.status(404).send("Error 404 - Page not found");
+});
 
 //<---------------start server-------------------------->
 app.listen(port, () => { console.log("Server running in port " + port) });

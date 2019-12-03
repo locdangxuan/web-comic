@@ -1,4 +1,5 @@
 const ComicModel = require('../models/comic.model');
+const UserModel = require('../models/user.model');
 const httpStatus = require('http-status');
 
 module.exports = {
@@ -65,6 +66,48 @@ module.exports = {
                 return comic.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
             });
             res.send(comicFilter);
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+
+    getCategories: async (req, res) => {
+        try {
+            let comics = await ComicModel.find();
+            let categories = [];
+            comics.forEach(comic => categories.push(comic.category));
+            const filterCategory = categories.filter((category, index, array) => {
+                return array.indexOf(category) === index
+            });
+            console.log(filterCategory);
+            res.send(filterCategory);
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+    comment: async (req, res) => {
+        try {
+            const comicExist = await ComicModel.findOne({ _id: req.params.id });
+            console.log(req.params.id);
+            if (!comicExist)
+                return res.send("cannot find comic");
+
+            const users = await UserModel.find();
+            let userIds = [];
+            let check = false;
+            users.forEach(user => { if (user.token !== null) userIds.push(user._id) });
+            let newComment = {
+                postedBy: req.body.postedBy,
+                content: req.body.content
+            }
+            userIds.forEach(userid => { if (!newComment.postedBy.localeCompare(userid)) check = true; })
+            if (check) {
+                res.send(newComment);
+                comicExist.comments.push(newComment);
+
+                await comicExist.save();
+            } else res.send("You must login before comment")
+
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }
