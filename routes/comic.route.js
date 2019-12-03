@@ -22,7 +22,7 @@ router.get('/:id/list-chapter', chapterController.getListChapter);
 router.post('/:id/delete-chapter', chapterController.deleteChapter);
 
 // <------------comment in comic ----------------->
-router.post('/:id/create-comment', comicController.comment);
+router.post('/:id/new-comment', comicController.newComment);
 
 
 module.exports = router;

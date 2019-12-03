@@ -60,9 +60,9 @@ module.exports = {
 
     searchComic: async (req, res) => {
         try {
-            let comics = await ComicModel.find();
-            let q = req.query.q;
-            let comicFilter = comics.filter(comic => {
+            const comics = await ComicModel.find();
+            const q = req.query.q;
+            const comicFilter = comics.filter(comic => {
                 return comic.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
             });
             res.send(comicFilter);
@@ -73,8 +73,8 @@ module.exports = {
 
     getCategories: async (req, res) => {
         try {
-            let comics = await ComicModel.find();
-            let categories = [];
+            const comics = await ComicModel.find();
+            const categories = [];
             comics.forEach(comic => categories.push(comic.category));
             const filterCategory = categories.filter((category, index, array) => {
                 return array.indexOf(category) === index
@@ -85,26 +85,23 @@ module.exports = {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }
     },
-    comment: async (req, res) => {
+    newComment: async (req, res) => {
         try {
             const comicExist = await ComicModel.findOne({ _id: req.params.id });
-            console.log(req.params.id);
             if (!comicExist)
                 return res.send("cannot find comic");
-
+            let checkUserId = false;
             const users = await UserModel.find();
-            let userIds = [];
-            let check = false;
+            const userIds = [];
             users.forEach(user => { if (user.token !== null) userIds.push(user._id) });
-            let newComment = {
+            const newComment = {
                 postedBy: req.body.postedBy,
                 content: req.body.content
             }
-            userIds.forEach(userid => { if (!newComment.postedBy.localeCompare(userid)) check = true; })
-            if (check) {
+            userIds.forEach(userId => checkUserId = (!newComment.postedBy.localeCompare(userId)) ? true : false);
+            if (checkUserId) {
                 res.send(newComment);
                 comicExist.comments.push(newComment);
-
                 await comicExist.save();
             } else res.send("You must login before comment")
 
