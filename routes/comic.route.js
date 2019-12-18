@@ -7,7 +7,8 @@ const chapterController = require('../app/api/controllers/chapter.controller');
 //<---------------get list comic------------------------->
 router.get('/search-comic', comicController.searchComic);
 router.get('/list-comic', comicController.getListComic);
-router.get('/categories', comicController.getCategories)
+router.get('/random-comic', comicController.randomComic);
+router.get('/categories', comicController.getCategories);
 router.post('/create-comic', comicController.create);
 router.delete('/delete-comic', comicController.delete);
 router.get('/:id', comicController.getComicById);

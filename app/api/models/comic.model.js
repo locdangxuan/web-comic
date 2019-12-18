@@ -25,6 +25,10 @@ const comicSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    view: {
+        type: Number,
+        default: 0
+    },
     comments:[{
         postedBy: {
             type: mongoose.Schema.Types.ObjectId,

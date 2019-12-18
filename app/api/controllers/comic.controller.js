@@ -108,5 +108,15 @@ module.exports = {
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }
+    },
+
+    randomComic: async (req, res) => {
+        try {
+            const comics = await ComicModel.find();
+            const random = comics.sort(() => 0.5 - Math.random());
+            res.send(random);
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
     }
 }
