@@ -110,15 +110,28 @@ module.exports = {
         }
     },
 
-    randomComic: async (req, res) => {
+    randomComicFromList: async (req, res) => {
         try {
             const comics = await ComicModel.find();
             const random = comics.sort(() => 0.5 - Math.random());
-            const get12 = random.slice(0,12);
+            const get12 = random.slice(0, 12);
             console.log(get12.length);
             res.send(get12);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+
+    rankViewComic: async (req, res) => {
+        try {
+            const comics = await ComicModel.find();
+            const rank = comics.sort((low, high) => {
+                return high.view - low.view
+            });
+            const get10 = rank.slice(0,10);
+            res.send(get10);
+        } catch (err) {
+
         }
     }
 }

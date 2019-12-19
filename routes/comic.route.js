@@ -7,13 +7,13 @@ const chapterController = require('../app/api/controllers/chapter.controller');
 //<---------------get list comic------------------------->
 router.get('/search-comic', comicController.searchComic);
 router.get('/list-comic', comicController.getListComic);
-router.get('/random-comic', comicController.randomComic);
+router.get('/random-comic', comicController.randomComicFromList);
+router.get('/rank-view-comic', comicController.rankViewComic);
 router.get('/categories', comicController.getCategories);
 router.post('/create-comic', comicController.create);
 router.delete('/delete-comic', comicController.delete);
 router.get('/:id', comicController.getComicById);
 router.put('/:id/update-comic', comicController.update);
-
 
 //<----------------chapter in each comic----------------->
 router.post('/:id/create-list-chapter', chapterController.createListChapter);
