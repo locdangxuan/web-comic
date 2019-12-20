@@ -90,12 +90,21 @@ module.exports = {
 
     getListChapter: async (req, res) => {
         try {
-            // console.log("1");
-            let chapter = await ChapterModel.findOne({ comicID: req.params.id });
-            //let chapter = await ChapterModel.find();
+            const chapter = await ChapterModel.findOne({ comicID: req.params.id });
             res.send(chapter);
         } catch (err) {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }
+    },
+
+    newestChapter: async (req, res) => {
+        try {
+            const chapter = await ChapterModel.findOne({ comicID: req.params.id });
+            const detail = chapter.detail;
+            const newestChapter = detail[detail.length - 1]
+            res.send(newestChapter);
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }   
     }
 }

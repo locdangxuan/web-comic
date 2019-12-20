@@ -21,10 +21,11 @@ router.post('/:id/add-new-chapter', chapterController.addNewChapter);
 router.put('/:id/update-chapter', chapterController.updateChapter);
 router.get('/:id/list-chapter', chapterController.getListChapter);
 router.post('/:id/delete-chapter', chapterController.deleteChapter);
+router.get('/:id/newest-chapter', chapterController.newestChapter)
 
 // <------------comment in comic ----------------->
 router.post('/:id/new-comment', comicController.newComment);
-
+router.get('/:id/get-comment', comicController.getComment);
 
 module.exports = router;
 

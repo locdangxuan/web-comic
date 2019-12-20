@@ -29,7 +29,7 @@ const comicSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    comments:[{
+    comments: [{
         postedBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
@@ -40,7 +40,11 @@ const comicSchema = new mongoose.Schema({
             required: true,
             trim: true
         }
-    }]
+    }],
+    status: {
+        type: Boolean,
+        default: false
+    }
 })
 
 module.exports = mongoose.model('Comic', comicSchema, 'comics');

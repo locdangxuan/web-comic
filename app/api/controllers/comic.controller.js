@@ -85,6 +85,7 @@ module.exports = {
             return res.status(httpStatus.BAD_REQUEST).send(err);
         }
     },
+
     newComment: async (req, res) => {
         try {
             const comicExist = await ComicModel.findOne({ _id: req.params.id });
@@ -110,6 +111,31 @@ module.exports = {
         }
     },
 
+
+    getComment: async (req, res) => {
+        try {
+            const users = await UserModel.find();
+            const comicExist = await ComicModel.findOne({ _id: req.params.id });
+            if (!comicExist)
+                return res.send("cannot find comic");
+            const listComments = [];
+            const avatarUser = []
+            comicExist.comments.forEach(comment => listComments.push(comment));
+            // listComments.forEach(async comm => {
+            //     const user = await UserModel.findOne({_id: comm.postedBy});
+            //     avatarUser.push(user);
+            //     console.log(avatarUser);
+            // });
+            // for (int i = 0; i < listComments.length; i++) {
+            //     for(int k = 0; k < users.length; j++)
+            // }
+            res.send(listComments);
+
+        } catch (err) {
+            return res.status(httpStatus.BAD_REQUEST).send(err);
+        }
+    },
+
     randomComicFromList: async (req, res) => {
         try {
             const comics = await ComicModel.find();
@@ -128,10 +154,10 @@ module.exports = {
             const rank = comics.sort((low, high) => {
                 return high.view - low.view
             });
-            const get10 = rank.slice(0,10);
+            const get10 = rank.slice(0, 10);
             res.send(get10);
         } catch (err) {
-
+            return res.status(httpStatus.BAD_REQUEST).send(err);
         }
     }
 }
